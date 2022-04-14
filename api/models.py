@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Permission
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -21,6 +22,7 @@ class PostSearch(models.Model):
     postName = models.CharField(max_length=500)
     postInfo = models.CharField(max_length=500)
     postVehicleId = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    postCreated = models.DateTimeField('Date created', default=timezone.now)
 
 
 class PostFound(models.Model):
@@ -28,6 +30,7 @@ class PostFound(models.Model):
     postName = models.CharField(max_length=500)
     postInfo = models.CharField(max_length=500)
     postVehicleId = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    postCreated = models.DateTimeField('Date created', default=timezone.now)
 
 
 class UserNotification(models.Model):
