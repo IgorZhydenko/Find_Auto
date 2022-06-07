@@ -1,0 +1,340 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#site-head {
+  background-color: #222831;
+}
+
+.header-links, .header-links:visited {
+  color: #FD7013;
+  padding: 5px 5px;
+  margin: 0 5px;
+}
+
+.header-links:hover {
+  color: #eeaf37;
+  text-decoration: none;
+}
+
+#lang-btn {
+  background-color: #222831;
+  color: #EEEEEE;
+  position: fixed;
+  padding: 8px 12px;
+  border-radius: 5px;
+  right: 15px;
+  bottom: 30px;
+}
+
+#lang-btn:hover {
+  right: 14px;
+  bottom: 29px;
+  background-color: #393E46;
+  padding: 9px 13px;
+  cursor: pointer;
+}
+
+#site-name {
+  color: #F7B32D;
+  font-size: 19px;
+  margin-right: 40px;
+}
+
+.head-link-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.page-body-wrapper {
+  margin: 0 85px;
+}
+
+.auth_container {
+  display: block;
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 20px;
+  border: 1px dotted #3c3c3c;
+  border-radius: 20px;
+  padding: 18px;
+  background-color: #e3e3e3;
+}
+
+.page_title {
+  text-align: center;
+  font-size: 27px;
+  margin-bottom: 25px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: red;
+}
+
+.auth-button {
+  margin-top: 10px;
+  border-width: 0;
+  color: #EEEEEE;
+  background-color: #292929;
+  width: fit-content;
+}
+
+.auth-button:hover, .auth-button:focus {
+  background-color: #393E46;
+  color: #F7B32D;
+}
+
+.auth-button:disabled {
+  color: #EEEEEE;
+  background-color: #292929;
+}
+
+#re_entering_password {
+  margin-top: 10px;
+}
+
+#ration-choosing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+#ration-name-select {
+  margin-top: 10px;
+  width: 300px;
+}
+
+.ration-choosing-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ration-choosing-group > input {
+  width: 300px;
+}
+
+#ration-table {
+  margin-top: 40px;
+}
+
+#no-ration-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 25px;
+}
+
+.ration-product-btn {
+  width: 40px;
+  height: 40px;
+}
+
+#delete-ration {
+  margin: 10px 0 30px 0;
+}
+
+.health-indicator-positive {
+  background-color: #7bd91b;
+}
+
+.health-indicator-negative {
+  background-color: #bb1515;
+}
+
+.health-indicator-undefined {
+  background-color: #e59d19;
+}
+
+.health-indicator {
+  width: 30%;
+  margin: 10px;
+  border-radius: 12px;
+}
+
+.health-indicator div {
+  margin: 10px;
+}
+
+.health-indicator-name {
+  font-size: 21px;
+  padding: 10px 0;
+}
+
+.health-indicator-value {
+  font-size: 17px;
+  padding: 5px 0;
+}
+
+.health-indicator-verdict {
+  font-size: 19px;
+  padding: 10px 0;
+}
+
+.health-indications {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.health-indicator-div-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.health-indicator-div-wrapper-name {
+  height: 90px;
+}
+
+.health-indicator-div-wrapper-value {
+  height: 40px;
+}
+
+.health-indicator-div-wrapper-verdict {
+  height: 70px;
+}
+
+#consumed-microelements {
+  margin: 20px;
+  font-size: 21px;
+}
+
+#statistics-title {
+  margin: 40px 0 20px;
+  font-size: 22px;
+}
+
+#time-period-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+#time-period {
+  width: 350px;
+}
+
+.stat-bar {
+  margin-bottom: 40px;
+}
+
+.static-indication-title {
+  font-size: 18px;
+  font-style: italic;
+}
+
+.admin-bottom-icon {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  right: 16px;
+}
+
+.admin-bottom-icon:hover {
+  width: 55px;
+  height: 55px;
+}
+
+.update-cert {
+  bottom: 88px;
+}
+
+.update-cert:hover {
+  right: 14px;
+  bottom: 85px;
+}
+
+.backup-btn {
+  bottom: 155px;
+}
+
+.backup-btn:hover {
+  right: 14px;
+  bottom: 152px;
+}
+
+.restore-btn {
+  bottom: 220px;
+}
+
+.restore-btn:hover {
+  right: 14px;
+  bottom: 218px;
+}
+
+#table-name-wrapper {
+  margin-top: 25px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.admin-subheader {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#table-name-input {
+  width: 500px;
+}
+
+.new-entity-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.new-entity-input {
+  width: 550px;
+}
+
+.last-btn {
+  margin-bottom: 40px;
+}
