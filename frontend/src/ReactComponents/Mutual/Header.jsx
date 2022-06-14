@@ -41,11 +41,17 @@ const Header = (props) => {
                     }
                     {props.userData && props.userData['isAdmin'] !== true &&
                     <>
+                        <NavLink to='/home' className='header-links'>
+                            {t('header.home')}
+                        </NavLink>
                         <NavLink to='/posts' className='header-links'>
                             {t('header.posts')}
                         </NavLink>
-                        <NavLink to='/similarity' className='header-links'>
-                            {t('header.similarity')}
+                        <NavLink to='/bookmarks' className='header-links'>
+                            {t('header.bookmark')}
+                        </NavLink>
+                        <NavLink to='/about-us' className='header-links'>
+                            {t('header.about_us')}
                         </NavLink>
                         <NavLink
                             to='/login'

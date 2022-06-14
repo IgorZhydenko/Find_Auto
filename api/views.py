@@ -6,13 +6,10 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from api.models import User, Post, LostStatus, Comment, PostUploads
-from api.serializers import UserSerializer, PostSerializer, LostStatusSerializer, CommentSerializer, PostUploadsSerializer
-
-
+from api.models import User, Post, LostStatus, Bookmark, Comment, PostUploads
+from api.serializers import UserSerializer, PostSerializer, BookmarkSerializer, LostStatusSerializer, CommentSerializer, PostUploadsSerializer
 import datetime
 import os
-
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from django.db.models.functions import TruncDate
 from rest_framework.response import Response
@@ -52,9 +49,11 @@ class UsersView(mixins.ListModelMixin,
                       viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    swagger_schema = None
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get(self, request, *args, **kwargs):
+        self.request.session.set_expiry(0)
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -74,44 +73,13 @@ class PostView(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveMo
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-        # serializer = PostSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # self.perform_create(serializer)
-        #
-        # image = request.data.get("images[]")
-        # upload_image = PostUploads(image=image, post_id=serializer.instance.pk)
-        # upload_image.save()
-        # return HttpResponse(status=200)
+        return self.create(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-#
-# class PostFileView(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
-#                mixins.DestroyModelMixin, viewsets.GenericViewSet):
-#     queryset = Post.objects.all()
-#     serializer_class = PostFileSerializer
-#     http_method_names = ['create', 'get', 'post', 'put', 'delete']
-#
-#     def create(self, request, *args, **kwargs):
-#         serializer = PostFileSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_create(serializer)
-#
-#         image = request.data.get("images[]")
-#         upload_image = PostUploads(image=image, post_id=serializer.instance.pk)
-#         upload_image.save()
-#         #request.data.images = image
-#
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request, *args, **kwargs)
-#
-#     def post(self, request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
-#
-#     def delete(self, request, *args, **kwargs):
-#         return self.destroy(request, *args, **kwargs)
-#
 
 
 class PostUploadsView(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
@@ -157,7 +125,6 @@ class UserPostView(ModelViewSet):
         return models.Post.objects.filter(user=self.request.user)
 
 
-
 class CommentView(mixins.ListModelMixin,mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin, viewsets.GenericViewSet):
     queryset = Comment.objects.all()
@@ -174,68 +141,16 @@ class CommentView(mixins.ListModelMixin,mixins.CreateModelMixin, mixins.Retrieve
         return self.destroy(request, *args, **kwargs)
 
 
-"""
-    def get(self, request, *args, **kwargs):
-        #return self.list(request, *args, **kwargs)
-        info = list(models.Post.objects.all().values_list(
-            'id', 'name', 'user_id', 'vehicle_id',
-            'info', 'vehicle_seen_place', 'vehicle_seen_date', 'created', 'closed', 'is_active'
-        ))
-        #result_dict = self.serialize(info)
-        return HttpResponse(info, status=200)
-        """
-"""
-mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
-                mixins.DestroyModelMixin, viewsets.GenericViewSet
-
-class MyPostView(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
-               mixins.DestroyModelMixin, viewsets.GenericViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
-
-    def retrieve(self, request, pk=None):
-        queryset = models.RationProduct.objects.filter(ration=self.kwargs.get('pk'))
-        serialized_data = self.serialize(list(queryset))
-        return Response(serialized_data)
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-"""
-
-class UpdateCertificate(View):
-
-    def post(self, request, *args, **kwargs):
-        return execute_command(
-            'mkcert cert key 0.0.0.0 localhost 127.0.0.1 ::1 && mv '
-            'cert+5.pem cert.pem && mv cert+5-key.pem key.pem')
-
-
-def execute_command(command):
-    os.system(command)
-    return HttpResponse(status=200)
-
-
-"""
-class PostFoundViewSet(mixins.ListModelMixin,
-                           mixins.CreateModelMixin,
-                           mixins.RetrieveModelMixin,
-                           mixins.UpdateModelMixin,
-                           mixins.DestroyModelMixin,
-                           viewsets.GenericViewSet):
-
-    queryset = PostFound.objects.all()
-    serializer_class = PostFoundSerializer
+class BookmarkView(mixins.ListModelMixin,mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = Bookmark.objects.all()
+    serializer_class = BookmarkSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        user_id = request.data.user_id
+        bookmarks = Bookmark.objects.filter(user_id=user_id)
+        return HttpResponse(bookmarks)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -243,12 +158,6 @@ class PostFoundViewSet(mixins.ListModelMixin,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
-"""
-# class WorksViewSet(viewsets.ViewSet):
-#     queryset = Work.objects.prefetch_related('contributors').all()
-#     lookup_field = 'iswc'
-#
-#     def retrieve(self, request, iswc=None):
-#         work = get_object_or_404(self.queryset, iswc=iswc)
-#         serializer = WorkSerializer(work)
-#         return Response(serializer.data)
+        # return self.list(request, *args, **kwargs)
+        # post_id = request.data.post_id
+        # is_post_bookmarked = Bookmark.objects.filter(user_id=user_id, post_id=post_id)

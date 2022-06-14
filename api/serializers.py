@@ -1,13 +1,14 @@
 from rest_framework import serializers
 
-from api.models import User, Post, LostStatus, Comment, PostUploads
-
+from api.models import User, Post, LostStatus, Bookmark, Comment, PostUploads
+from api import models
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'about')
+        fields ='__all__'
+        #fields = ('username', 'password', 'email', 'first_name', 'last_name', 'about')
         #read_only_fields = ('email',)
 
 
@@ -15,74 +16,51 @@ class PostUploadsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostUploads
-        fields = 'post_id', 'image'
+        fields = ('pk', 'post_id', 'image')
 
 
 class PostSerializer(serializers.ModelSerializer):
-    #user = UserSerializer(read_only=True)
-    #uploads = PostUploadsSerializer(read_only=True, many=True)
-    #images = serializers.ImageField(required=False)
-    #images = PostUploadsSerializer(many=True)
+    uploads = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('name', 'user_id', 'info', 'is_search', 'vin_code', 'brand', 'model',
+        fields = ('pk', 'name', 'user_id', 'info', 'is_search', 'registration_number', 'vin_code', 'brand', 'model',
                   'year', 'color', 'distinct_feature', 'vehicle_seen_place', 'vehicle_seen_date',
-                  'created', 'closed', 'is_active') #'images'
-#
-# class PostFileSerializer(serializers.ModelSerializer):
-#     images = PostUploadsSerializer(many=True)
-#
-#     class Meta:
-#         model = Post
-#         fields = ('name', 'user_id', 'info', 'is_search', 'vin_code', 'brand', 'model',
-#                   'year', 'color', 'distinct_feature', 'vehicle_seen_place', 'vehicle_seen_date',
-#                   'created', 'closed', 'is_active', 'images')
-# #
-#
-# class PostFilesSerializer(serializers.ModelSerializer):
-#     # user = UserSerializer(read_only=True)
-#     # uploads = PostUploadsSerializer(read_only=True, many=True)
-#     # uploads = serializers.ImageField(required=False)
-#     images = PostUploadsSerializer(many=True)
-#
-#     class Meta:
-#         model = Post
-#         fields = ('name', 'user_id', 'info', 'is_search', 'vin_code', 'brand', 'model',
-#                   'year', 'color', 'distinct_feature', 'vehicle_seen_place', 'vehicle_seen_date',
-#                   'created', 'closed', 'is_active', 'images')
+                  'created', 'closed', 'is_active', 'uploads')
 
-    # def create(self, validated_data):
-    #     uploads_data = validated_data.pop('uploads')
-    #     post = Post.objects.create(**validated_data)
-    #     for uploads_data in uploads_data:
-    #         PostUploads.objects.create(post_id=post.id, **uploads_data)
-    #     return post
+    def get_uploads(self, obj):
+        post_upload_query = models.PostUploads.objects.filter(post_id=obj.id)
+        serializer = PostUploadsSerializer(post_upload_query, many=True)
+
+        return serializer.data
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    post = PostSerializer(read_only=True)
 
     class Meta:
         model = Comment
         fields = '__all__'
 
 
+class BookmarkSerializer(serializers.ModelSerializer):
+    post = serializers.SerializerMethodField()
+    # user_post = serializers.BooleanField(default=False)
+
+    class Meta:
+        model = Bookmark
+        fields = ('pk', 'user_id', 'post_id', 'post')
+
+    def get_post(self, obj):
+        post_query = models.Post.objects.filter(pk=obj.post_id.pk).first()
+        serializer = PostSerializer(post_query)
+        return serializer.data
+    #
+    # def get_user_post(self, obj):
+    #
+
+
 class LostStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LostStatus
-        fields = '__all__'
-
-
-"""
-#fields = ('user_id', 'post_id', 'name', 'email', 'body', 'created', 'is_active')
- #fields = ('name', 'user_id', 'vehicle_id', 'info', 'files', 'vehicle_seen_place', 'vehicle_seen_date', 'created', 'closed', 'is_active')
-        #read_only_fields = 'created'
-        fields = '__all__'
-        
-        fields = ('name', 'user_id', 'info', 'status_search', 'vin_code', 'brand', 'model',
-                  'year', 'color', 'distinct_feature', 'vehicle_seen_place', 'vehicle_seen_date',
-                  'created', 'closed', 'is_active', 'uploads')
-"""
+        fields = ('post_search_id', 'post_found_id', 'status')

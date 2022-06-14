@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  //background-color:#0e1e44;
+  //background-color: #282c34;
 }
 
 .App-logo {
@@ -83,7 +85,7 @@
 }
 
 .page-body-wrapper {
-  margin: 0 85px;
+  /*margin: 0 85px;*/
 }
 
 .auth_container {

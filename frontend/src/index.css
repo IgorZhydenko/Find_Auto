@@ -11,3 +11,97 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.home-title {
+  text-align: left;
+}
+
+.home-text {
+  text-indent: 40px;
+  text-align: left;
+}
+
+.page-body-wrapper {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  margin-right: .1em;
+  margin-left: 1em;
+  padding-left: .5em;
+  padding-right: .5em;
+  max-width: 1400px;
+}
+
+.page-accordion-container {
+  text-align: center;
+  width: 300px;
+}
+
+.page-accordion {
+  text-align: center;
+  width: 250px;
+}
+
+.page-button {
+  margin-top: 1em;
+}
+
+.page-open-button {
+  margin-top: 1em;
+  //color: white;
+  //border: 1px solid red;
+}
+
+
+.page-accept-button {
+  margin-top: .5em;
+}
+
+.post-tools {
+  width: 20%;
+}
+
+.page-filter {
+  margin-bottom: 1em;
+  width: 200px;
+}
+
+.post-choosing-group {
+  margin-left: 1em;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 50% 50%;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: row;
+  width: 650px;
+  //background-color: #282c34;
+  //color: white;
+  border: 1px solid darkgrey;
+}
+
+.filter-check {
+  text-align: left;
+}
+
+.filter-color {
+  align-content: center;
+  margin-left: 80px;
+}
+
+.post-card-image {
+  max-width: 20em;
+  max-height: 20em;
+  object-fit: contain;
+  border: 1px solid black;
+}
+
+.post-card-body-color {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: .3em;
+  margin: .5em auto;
+}

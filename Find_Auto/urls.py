@@ -1,12 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-from django.contrib import admin
-from django.conf.urls import url, include
-from django.urls import include, path, re_path
-from rest_framework_swagger.views import get_swagger_view
+from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
-# from api.urls import vehicle_router, postSearchViewSet_router, postFoundViewSet_router, users_router
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenVerifyView,

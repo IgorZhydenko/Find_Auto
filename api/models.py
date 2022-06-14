@@ -15,6 +15,7 @@ class Post(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     info = models.TextField(max_length=500, null=True, blank=True)
     is_search = models.BooleanField(default=True)
+    registration_number = models.CharField(max_length=30, null=True, blank=True)
     vin_code = models.CharField(max_length=30, null=True, blank=True)
     brand = models.CharField(max_length=30, null=True, blank=True)
     model = models.CharField(max_length=30, null=True, blank=True)
@@ -42,6 +43,11 @@ class LostStatus(models.Model):
     post_search_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_search')
     post_found_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_found')
     status = models.TextField(null=True)
+
+
+class Bookmark(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class PostUploads(models.Model):
