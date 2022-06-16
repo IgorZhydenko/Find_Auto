@@ -20,6 +20,7 @@
     "react-chartjs-2": "^4.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.16.9",
+    "react-phone-number-input": "^3.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^1.0.1"

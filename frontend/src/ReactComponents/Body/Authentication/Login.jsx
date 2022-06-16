@@ -12,7 +12,7 @@ const Login = (props) => {
     const [status, setStatus] = useState(false);
     const history = useHistory();
     const { t } = useTranslation();
-    //REACT_APP_LOGIN=auth/token/login/
+
     const handleForm = event => {
         event.preventDefault();
         console.log(username);

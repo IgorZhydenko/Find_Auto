@@ -1,7 +1,28 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --yellow:#F7B32D;
+  --orange: #FD7013;
+  --black: #222831;
+  --grey: #eee;
+}
+
+
 .App {
   text-align: center;
   //background-color:#0e1e44;
   //background-color: #282c34;
+  //height: 100%;
+  //background-size: 100%;
+  background: var(--grey);
+  height: 100%;
+}
+
+html, body {
+  background-size: 100%, 100%;
+  margin: 0px !important;
+  height:100vh;
+  background: var(--grey);
 }
 
 .App-logo {
@@ -45,6 +66,7 @@
 
 .header-links, .header-links:visited {
   color: #FD7013;
+  //color: #847c82;
   padding: 5px 5px;
   margin: 0 5px;
 }

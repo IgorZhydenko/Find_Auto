@@ -5,29 +5,30 @@ import {Button} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
+import {colors} from "../../../colors/colors";
 
 const PostCard = ({postData, updateAllPosts}) => {
     const history = useHistory();
-    //console.log(postData, "etrete")
+
     const { t } = useTranslation();
 
     return (
         <Card className={"post-card"}>
-            {/*<Card.Img variant="top" className={"post-card-image"}*/}
-            {/*          src={postData.uploads && postData.uploads[0] && postData.uploads[0].image*/}
-            {/*              ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`*/}
-            {/*              : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'} />*/}
+            <Card.Img variant="top" className={"post-card-image"}
+                      src={postData.uploads && postData.uploads[0] && postData.uploads[0].image
+                          ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`
+                          : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'} />
 
-            <Figure>
-                <Figure.Image
-                    width={250}
-                    height={250}
-                    alt="171x180"
-                    src={postData.uploads && postData.uploads[0] && postData.uploads[0].image
-                        ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`
-                        : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'}
-                />
-            </Figure>
+            {/*<Figure>*/}
+            {/*    <Figure.Image*/}
+            {/*        width={250}*/}
+            {/*        height={250}*/}
+            {/*        alt="171x180"*/}
+            {/*        src={postData.uploads && postData.uploads[0] && postData.uploads[0].image*/}
+            {/*            ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`*/}
+            {/*            : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'}*/}
+            {/*    />*/}
+            {/*</Figure>*/}
 
             <Card.Body>
                 <Card.Title>{postData.name}</Card.Title>

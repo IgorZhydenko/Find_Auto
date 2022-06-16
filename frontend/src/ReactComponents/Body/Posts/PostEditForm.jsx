@@ -4,10 +4,13 @@ import axios from "axios";
 import {Button, Radio} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import PhoneInput from "react-phone-number-input";
+import 'react-phone-number-input/style.css'
 
 const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) => {
     const [name, setName] = useState(postData.name || '');
     const [info, setInfo] = useState(postData.info);
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [isSearch, setIsSearch] = useState(postData.is_search);
     const [vehicleSeenDate, setVehicleSeenDate] = useState(postData.vehicle_seen_date);
     const [vehicleSeenPlace, setVehicleSeenPlace] = useState(postData.vehicle_seen_place);
@@ -50,6 +53,7 @@ const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) =
                     'name': name,
                     'user_id': userData['userId'],
                     'info': info,
+                    'phone_number': phoneNumber,
                     'is_search': isSearch,
                     'vehicle_seen_date': vehicleSeenDate,
                     'vehicle_seen_place': vehicleSeenPlace,
@@ -164,6 +168,12 @@ const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) =
                                           onChange={(e) => setInfo(e.target.value)}
                             />
                         </Form.Group>
+
+                        <PhoneInput
+                            placeholder={t('enter_phone_number')}
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e)}
+                        />
 
                         <Form.Group className="mb-3" controlId="formBasicText">
                             <Form.Label>{t('post.registration_number')}</Form.Label>

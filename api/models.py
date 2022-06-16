@@ -13,6 +13,7 @@ class User(AbstractUser):
 class Post(models.Model):
     name = models.CharField(max_length=500)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=30, null=True, blank=True)
     info = models.TextField(max_length=500, null=True, blank=True)
     is_search = models.BooleanField(default=True)
     registration_number = models.CharField(max_length=30, null=True, blank=True)
@@ -27,22 +28,6 @@ class Post(models.Model):
     created = models.DateTimeField('Date created', default=timezone.now)
     closed = models.DateTimeField('Date closed', default=None, null=True, blank=True)
     is_active = models.BooleanField(default=True)
-
-
-class Comment(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    name = models.CharField(max_length=500)
-    email = models.EmailField(max_length=254)
-    body = models.TextField(null=True)
-    created = models.DateTimeField('Date created', default=timezone.now)
-    is_active = models.BooleanField(default=True)
-
-
-class LostStatus(models.Model):
-    post_search_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_search')
-    post_found_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_found')
-    status = models.TextField(null=True)
 
 
 class Bookmark(models.Model):

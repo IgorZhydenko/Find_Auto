@@ -1,3 +1,12 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --yellow:#F7B32D;
+  --orange: #FD7013;
+  --black: #222831;
+  --grey: #eee;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -80,7 +89,25 @@ code {
   width: 650px;
   //background-color: #282c34;
   //color: white;
+  background: var(--grey);
   border: 1px solid darkgrey;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.post-page {
+  display: flex;
+  margin: 0;
+}
+
+.post-page-image {
+  //width: 30%;
+}
+
+.post-page-text {
+  //width: 30%;
+  text-align: left;
+
+  //align-content: flex-start;
 }
 
 .filter-check {
@@ -96,12 +123,31 @@ code {
   max-width: 20em;
   max-height: 20em;
   object-fit: contain;
-  border: 1px solid black;
+  //border: 1px solid black;
+  border-right: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
 }
 
 .post-card-body-color {
   width: 1.5em;
   height: 1.5em;
   border-radius: .3em;
-  margin: .5em auto;
+}
+
+.post-card-body-color-container {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+
+.post-page-container button {
+  margin-right: 1em;
+}
+
+.post-page-body-color {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: .3em;
+  margin: 0;
 }

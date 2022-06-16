@@ -5,10 +5,13 @@ import {Button, Radio} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
     const [name, setName] = useState('');
     const [info, setInfo] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [isSearch, setIsSearch] = useState(true);
     const [vehicleSeenDate, setVehicleSeenDate] = useState('');
     const [vehicleSeenPlace, setVehicleSeenPlace] = useState('');
@@ -71,6 +74,7 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
                     'name': name,
                     'user_id': userData['userId'],
                     'info': info,
+                    'phone_number': phoneNumber,
                     'is_search': isSearch,
                     'vehicle_seen_date': vehicleSeenDate,
                     'vehicle_seen_place': vehicleSeenPlace,
@@ -175,6 +179,14 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
                                 </div>
                             ))}
                         </Form>
+
+                        <PhoneInput
+                            placeholder={t('enter_phone_number')}
+                            value={phoneNumber}
+                            onChange={(e) =>
+                            {console.log(e, "e")
+                                setPhoneNumber(e)}}
+                        />
 
                         <Form.Group className="mb-3" controlId="formBasicText">
                             <Form.Label>{t('post.vehicle_seen_place')}</Form.Label>

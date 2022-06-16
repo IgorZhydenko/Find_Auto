@@ -4,10 +4,10 @@ import {useEffect,  useTranslation } from "react-i18next";
 import PostCard from "./PostCard";
 import PostCreateForm from "./PostCreateForm";
 import {TextField} from "@material-ui/core";
+import {colors} from "../../../colors/colors";
 
 const Posts = (props) => {
     const [name, setName] = useState('');
-    const [info, setInfo] = useState('');
     const [isSearch, setIsSearch] = useState(true);
     const [vehicleSeenDate, setVehicleSeenDate] = useState('');
     const [vehicleSeenPlace, setVehicleSeenPlace] = useState('');
@@ -34,7 +34,7 @@ const Posts = (props) => {
 
             <Accordion  defaultActiveKey="0" className={"page-accordion-container"}>
                 <Accordion.Item className={"page-accordion"}>
-                    <Accordion.Header>Filters </Accordion.Header>
+                    <Accordion.Header>{t('filter')}</Accordion.Header>
                     <Accordion.Body>
                         <div className={"page-filter"}>
                             <input  type="checkbox" id="my_posts" name="my_posts"/>
@@ -54,15 +54,6 @@ const Posts = (props) => {
                             />
                         </div>
 
-                        <div className={"page-filter"}>
-                            <TextField
-                                id="filter_info"
-                                label={t('post.info')}
-                                variant="outlined"
-                                onChange={(e) => setInfo(e.target.value)}
-                            />
-                        </div>
-
                         <Form>
                             {['radio'].map((type) => (
                                 <div key={`inline-${type}`} className="mb-3 filter-check">
@@ -72,16 +63,24 @@ const Posts = (props) => {
                                         name="group1"
                                         type={type}
                                         id={`inline-${type}-1`}
-                                        //checked={isSearch}
-                                        onChange={(e) => setIsSearch( true)}/>
+                                        checked={props.filterData.isSearch}
+                                        // onChange={(e) => setIsSearch( true)}
+                                        onChange={(e) => {
+                                            props.setFilterData(() => ({...props.filterData, isSearch: true}))
+                                        }}
+                                    />
                                     <Form.Check
                                         inline
                                         label={t('post.status_found')}
                                         name="group1"
                                         type={type}
                                         id={`inline-${type}-2`}
-                                        //checked={!isSearch}
-                                        onChange={(e) => setIsSearch(false)}/>
+                                        checked={!props.filterData.isSearch}
+                                        //onChange={(e) => setIsSearch(false)}
+                                        onChange={(e) => {
+                                            props.setFilterData(() => ({...props.filterData, isSearch: false}))
+                                        }}
+                                    />
                                 </div>
                             ))}
                         </Form>
@@ -92,8 +91,11 @@ const Posts = (props) => {
                                 max={new Date().toISOString().slice(0, 10)}
                                 type="date"
                                 placeholder={t('post.enter_vehicle_seen_date')}
-                                //value={vehicleSeenDate}
-                                onChange={(e) => setVehicleSeenDate(e.target.value)}
+                                value={props.filterData.vehicleSeenDate}
+                                //onChange={(e) => setVehicleSeenDate(e.target.value)}
+                                onChange={(e) => {
+                                    props.setFilterData(() => ({...props.filterData, vehicleSeenDate: e.target.value}))
+                                }}
                             />
                         </Form.Group>
 
@@ -102,7 +104,11 @@ const Posts = (props) => {
                                 id="filter_seen_place"
                                 label={t('post.vehicle_seen_place')}
                                 variant="outlined"
-                                onChange={(e) => setVehicleSeenPlace(e.target.value)}
+                                //onChange={(e) => setVehicleSeenPlace(e.target.value)}
+                                value={props.filterData.vehicleSeenPlace}
+                                onChange={(e) => {
+                                    props.setFilterData(() => ({...props.filterData, vehicleSeenPlace: e.target.value}))
+                                }}
                             />
                         </div>
 
@@ -111,7 +117,11 @@ const Posts = (props) => {
                                 id="filter_number"
                                 label={t('post.registration_number')}
                                 variant="outlined"
-                                onChange={(e) => setRegistrationNumber(e.target.value)}
+                                //onChange={(e) => setRegistrationNumber(e.target.value)}
+                                value={props.filterData.registrationNumber}
+                                onChange={(e) => {
+                                    props.setFilterData(() => ({...props.filterData, registrationNumber: e.target.value}))
+                                }}
                             />
                         </div>
 
@@ -120,7 +130,11 @@ const Posts = (props) => {
                                 id="filter_vin"
                                 label={t('post.vin_code')}
                                 variant="outlined"
-                                onChange={(e) => setVinCode(e.target.value)}
+                                value={props.filterData.vinCode}
+                                //onChange={(e) => setVehicleSeenDate(e.target.value)}
+                                onChange={(e) => {
+                                    props.setFilterData(() => ({...props.filterData, vinCode: e.target.value}))
+                                }}
                             />
                         </div>
 
@@ -128,7 +142,11 @@ const Posts = (props) => {
                             <TextField id="filter_brand"
                                        label={t('post.brand')}
                                        variant="outlined"
-                                       onChange={(e) => setBrand(e.target.value)}
+                                       //onChange={(e) => setBrand(e.target.value)}
+                                       value={props.filterData.brand}
+                                       onChange={(e) => {
+                                           props.setFilterData(() => ({...props.filterData, brand: e.target.value}))
+                                       }}
                             />
                         </div>
 
@@ -136,7 +154,11 @@ const Posts = (props) => {
                             <TextField id="filter_model"
                                        label={t('post.model')}
                                        variant="outlined"
-                                       onChange={(e) => setModel(e.target.value)}
+                                       //onChange={(e) => setModel(e.target.value)}
+                                       value={props.filterData.model}
+                                       onChange={(e) => {
+                                           props.setFilterData(() => ({...props.filterData, model: e.target.value}))
+                                       }}
                             />
                         </div>
 
@@ -147,7 +169,11 @@ const Posts = (props) => {
                                 type="date"
                                 placeholder={t('post.enter_year')}
                                 //value={vehicleSeenDate}
-                                onChange={(e) => setYear(e.target.value)}
+                                //onChange={(e) => setYear(e.target.value)}
+                                value={props.filterData.year}
+                                onChange={(e) => {
+                                    props.setFilterData(() => ({...props.filterData, year: e.target.value}))
+                                }}
                             />
                         </Form.Group>
 
@@ -158,18 +184,28 @@ const Posts = (props) => {
                             title={t('post.enter_color')}
                             className={"filter-color"}
                             //value={color}
-                            onChange={(e) => {setColor(e.target.  value)}}
+                            //onChange={(e) => {setColor(e.target.value)}}
+                            value={props.filterData.color}
+                            onChange={(e) => {
+                                props.setFilterData(() => ({...props.filterData, color: e.target.value}))
+                            }}
                         />
 
-                        <div>
-                            <Button
-                                className={"page-button"}
-                                variant="primary"
-                                onClick={useFilter}>
-                                {t('accept-filter')}
+                        {/*<Form.Select aria-label="Color">*/}
+                        {/*    {colors.map((color) => {*/}
+                        {/*        return <option value={color}><Container  style={{background:color}} className="post-card-body-color"/>{color}</option>*/}
+                        {/*    })}*/}
+                        {/*</Form.Select>*/}
 
-                            </Button>
-                        </div>
+                        {/*<div>*/}
+                        {/*    <Button*/}
+                        {/*        className={"page-button"}*/}
+                        {/*        variant="primary"*/}
+                        {/*        onClick={useFilter}>*/}
+                        {/*        {t('accept-filter')}*/}
+
+                        {/*    </Button>*/}
+                        {/*</div>*/}
                     </Accordion.Body>
                 </Accordion.Item>
 

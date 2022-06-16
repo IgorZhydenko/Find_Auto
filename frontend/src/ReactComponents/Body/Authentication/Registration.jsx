@@ -13,7 +13,6 @@ const Registration = (props) => {
     const history = useHistory();
     const { t } = useTranslation();
 
-
     const handleForm = event => {
         event.preventDefault();
         if (password !== repassword) {

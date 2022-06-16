@@ -18,16 +18,18 @@ const Bookmarks = (props) => {
                 headers: {
                     'Authorization': 'JWT ' + localStorage.getItem('login_token')
                 },
-                data: props.userData.user_id,
+            //     data: {
+            //         'user_id': props.userData.userId,
+            // },
                 url: process.env.REACT_APP_LINK +
-                    process.env.REACT_APP_BOOKMARKS,
+                    process.env.REACT_APP_BOOKMARKS + props.userData.userId + "/",
             }
         )
             .then(res => {
                 //props.updateAllPosts(res.data.results);
-                console.log(res.data.results, "ghjghjgj");
+                console.log(res.data, "ghjghjgj");
 
-                setBookmarkedPosts(res.data.results)
+                setBookmarkedPosts(res.data)
                 //setPostId(res.data.results.post_id)
             })
             .catch(err => {

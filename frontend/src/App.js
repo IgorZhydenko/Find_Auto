@@ -38,7 +38,7 @@ function App() {
   // const [distinctFeature, setDistinctFeature] = useState('');
   // const [images, setImages] = useState([]);
 
-    const [filterData, setFilterData] = useState({name:"", info:"", isSearch:true, vehicleSeenDate:"",
+    const [filterData, setFilterData] = useState({name:"", isSearch:true, vehicleSeenDate:"",
         vehicleSeenPlace:"", registrationNumber:"", vinCode: "", brand:"", model:"", year:"", color:""});
 
   const languageInit = () => {
@@ -60,6 +60,7 @@ function App() {
   }
 
   useEffect(() => {
+      console.log(filterData, "filter")
     const getPosts = () => {
       axios(
           {

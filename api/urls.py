@@ -12,7 +12,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
-from api.views import PostView, UsersView, PostUploadsView, BookmarkView, CommentView, LostStatusView
+from api.views import PostView, UsersView, PostUploadsView, BookmarkView, PostBookmarkedView
 from django.conf.urls import url
 from django.urls import include
 from django.urls import path, re_path
@@ -34,14 +34,11 @@ posts_router.register(r'', PostView, basename='posts')
 users_router = DefaultRouter()
 users_router.register(r'', UsersView)
 
-lost_status_router = DefaultRouter()
-lost_status_router.register(r'', LostStatusView)
-
 bookmark_router = DefaultRouter()
 bookmark_router.register(r'', BookmarkView)
 
-comment_router = DefaultRouter()
-comment_router.register(r'', CommentView)
+post_bookmarked_router = DefaultRouter()
+post_bookmarked_router.register(r'', PostBookmarkedView)
 
 posts_uploads_router = DefaultRouter()
 posts_uploads_router.register(r'', PostUploadsView, basename='posts')
@@ -52,29 +49,33 @@ urlpatterns = [
     re_path(r'posts/', include(posts_router.urls)),
     re_path(r'users/', include(users_router.urls)),
     re_path(r'post_uploads/', include(posts_uploads_router.urls)),
-    re_path(r'lost_status/', include(lost_status_router.urls)),
     re_path(r'bookmarks/', include(bookmark_router.urls)),
+    re_path(r'bookmark/<int:user_id>/<int:post_id>/', include(post_bookmarked_router.urls)),
 ]
-#re_path(r'similarity/', include(posts_router.urls)),
-#urlpatterns += simple_router.urls
-
 """
-vehicle_router = DefaultRouter()
-vehicle_router.register(r'', VehicleViewSet, basename='section')
+simple_router = SimpleRouter()
 
-postSearchViewSet_router = DefaultRouter()
-postSearchViewSet_router.register(r'', PostSearchViewSet)
 
-postFoundViewSet_router = DefaultRouter()
-postFoundViewSet_router.register(r'', PostFoundViewSet)
-
-users_router = DefaultRouter()
-users_router.register(r'', UsersItemViewSet)
+simple_router.register(
+    'user', views.UsersView, basename='user'
+)
+simple_router.register(
+    'posts', views.PostView, basename='posts'
+)
+simple_router.register(
+    'post_uploads', views.PostUploads, basename='post_uploads'
+)
+simple_router.register(
+    'bookmarks', views.Bookmark, basename='bookmarks'
+)
 
 urlpatterns = [
-    re_path(r'vehicle/', include(vehicle_router.urls)),
-    re_path(r'postSearch/', include(postSearchViewSet_router.urls)),
-    re_path(r'postFound/', include(postFoundViewSet_router.urls)),
-    re_path(r'users/', include(users_router.urls)),
+    path('docs/', swagger_schema.with_ui(
+        'swagger', cache_timeout=0)),
+    # path('posts/', views.PostView),
+    # path('post_uploads/', views.PostUploadsView),
+    # path('bookmarks/', views.BookmarkView),
 ]
+
+urlpatterns += simple_router.urls
 """
