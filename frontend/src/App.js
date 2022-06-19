@@ -1,6 +1,4 @@
-//import {BrowserRouter, Redirect, Route} from "react-router-dom";
-import {BrowserRouter, Navigate, Redirect, Route, Routes} from "react-router-dom";
-
+import {BrowserRouter, Redirect, Route} from "react-router-dom";
 import React, {useEffect, useState} from 'react';
 import Header from "./ReactComponents/Mutual/Header";
 import LanguageButton from "./ReactComponents/Mutual/LanguageButton";
@@ -9,7 +7,6 @@ import Registration from "./ReactComponents/Body/Authentication/Registration";
 import Administration from "./ReactComponents/Body/Administration/Administration";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-
 import i18n from "i18next";
 import "./i18n";
 import './App.css';
@@ -24,21 +21,9 @@ function App() {
   const [firstLoad, setFirstLoad] = useState(true);
   const [posts, setPosts] = useState([]);
 
-  // const [name, setName] = useState('');
-  // const [info, setInfo] = useState('');
-  // const [isSearch, setIsSearch] = useState(true);
-  // const [vehicleSeenDate, setVehicleSeenDate] = useState('');
-  // const [vehicleSeenPlace, setVehicleSeenPlace] = useState('');
-  // const [registrationNumber, setRegistrationNumber] = useState('');
-  // const [vinCode, setVinCode] = useState('');
-  // const [brand, setBrand] = useState('');
-  // const [model, setModel] = useState('');
-  // const [year, setYear] = useState(new Date());
-  // const [color, setColor] = useState('');
-  // const [distinctFeature, setDistinctFeature] = useState('');
-  // const [images, setImages] = useState([]);
+  const [postFilterName, setPostFilterName] = useState('');
 
-    const [filterData, setFilterData] = useState({name:"", isSearch:true, vehicleSeenDate:"",
+    const [filterData, setFilterData] = useState({myPosts:false, name:"", isSearch:undefined, vehicleSeenDate:"",
         vehicleSeenPlace:"", registrationNumber:"", vinCode: "", brand:"", model:"", year:"", color:""});
 
   const languageInit = () => {
@@ -60,7 +45,6 @@ function App() {
   }
 
   useEffect(() => {
-      console.log(filterData, "filter")
     const getPosts = () => {
       axios(
           {
@@ -68,11 +52,11 @@ function App() {
             headers: {
               'Authorization': 'JWT ' + localStorage.getItem('login_token')
             },
-            data: {
-                filterData,
-            },
             url: process.env.REACT_APP_LINK +
                 process.env.REACT_APP_POSTS,
+            params: {
+              filterData
+            }
           }
       )
           .then(res => {
@@ -83,7 +67,7 @@ function App() {
           })
     }
     getPosts();
-  }, [])
+  }, [filterData])
 
   const verifyUser = () => {
     let current_token = localStorage.getItem('login_token');
@@ -140,7 +124,9 @@ function App() {
             }
             <Route component={() => <Home/>} path='/home' />
             <Route component={() => <AboutUs/>} path='/about-us' />
-            <Route component={() => <Posts userData={userData} setFilterData={setFilterData} filterData={filterData} posts={posts} updateAllPosts={updateAllPosts}/>} path='/posts' />
+            <Route component={() => <Posts userData={userData} setFilterData={setFilterData}
+            postFilterName={postFilterName} setPostFilterName={setPostFilterName} filterData={filterData}
+            posts={posts} updateAllPosts={updateAllPosts}/>} path='/posts' />
             <Route component={() => <Bookmarks userData={userData} updateAllPosts={updateAllPosts}/>} path='/bookmarks' />
             <Route component={() => <PostPage userData={userData} posts={posts} updateAllPosts={updateAllPosts}/>} path='/post/:postId' />
           </BrowserRouter>

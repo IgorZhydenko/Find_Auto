@@ -1,13 +1,10 @@
-import {useEffect, useState} from "react";
-import {Card, Container, OverlayTrigger, Tooltip, Figure, Accordion} from "react-bootstrap";
-import axios from "axios";
+import {Card, Container} from "react-bootstrap";
 import {Button} from "@material-ui/core";
-import PropTypes from "prop-types";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
-import {colors} from "../../../colors/colors";
+import React from "react";
 
-const PostCard = ({postData, updateAllPosts}) => {
+const PostCard = ({postData}) => {
     const history = useHistory();
 
     const { t } = useTranslation();
@@ -19,17 +16,6 @@ const PostCard = ({postData, updateAllPosts}) => {
                           ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`
                           : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'} />
 
-            {/*<Figure>*/}
-            {/*    <Figure.Image*/}
-            {/*        width={250}*/}
-            {/*        height={250}*/}
-            {/*        alt="171x180"*/}
-            {/*        src={postData.uploads && postData.uploads[0] && postData.uploads[0].image*/}
-            {/*            ? `${process.env.REACT_APP_LINK}${postData.uploads[0].image.slice(1)}`*/}
-            {/*            : 'https://bytes.ua/wp-content/uploads/2017/08/no-image.png'}*/}
-            {/*    />*/}
-            {/*</Figure>*/}
-
             <Card.Body>
                 <Card.Title>{postData.name}</Card.Title>
 
@@ -40,32 +26,35 @@ const PostCard = ({postData, updateAllPosts}) => {
                 </Card.Text>}
 
                 {(postData.registration_number || postData.registration_number !== '') && <Card.Text>
-                    {postData.registration_number}
+                    <b>{t('post.registration_number')}</b>: {postData.registration_number}
                 </Card.Text>}
 
                 {(postData.brand || postData.brand !== '') && <Card.Text>
-                    Brand: {postData.brand}
+                    <b>{t('post.brand')}</b>: {postData.brand}
                 </Card.Text>}
 
                 {(postData.model || postData.model !== '') && <Card.Text>
-                    Model: {postData.model}
+                    <b>{t('post.model')}</b>: {postData.model}
                 </Card.Text>}
 
                 {(postData.year || postData.year !== '') && <Card.Text>
-                    {postData.year}
+                    <b>{t('post.year')}</b>: {postData.year}
                 </Card.Text>}
 
+                <Card.Text>
+                    <b>{t('post.color')}</b>:
+                </Card.Text>
                 {(postData.color || postData.color !== '') && <Container style={{background:postData.color}} className={"post-card-body-color"}/>}
 
                 {(postData.vehicle_seen_place || postData.vehicle_seen_place !== '') && <Card.Text>
-                    {postData.vehicle_seen_place}
+                    <b>{t('post.vehicle_seen_place')}</b>: {postData.vehicle_seen_place}
                 </Card.Text>}
 
                 {(postData.vehicle_seen_date || postData.vehicle_seen_date !== '') && <Card.Text>
-                    {postData.vehicle_seen_date}
+                    <b>{t('post.vehicle_seen_date')}</b>: {postData.vehicle_seen_date}
                 </Card.Text>}
 
-                <Button className={"page-open-button"}  onClick={()=>{history.push(`/post/${postData.pk}`, postData)}}>
+                <Button className={"page-open-button"} onClick={()=>{history.push(`/post/${postData.pk}`, postData)}}>
                     {t('post.open_post')}
                 </Button>
         </Card.Body>
@@ -74,18 +63,3 @@ const PostCard = ({postData, updateAllPosts}) => {
 }
 
 export default PostCard;
-
-{/*{(postData.info || postData.info !== '') && <Card.Text>*/}
-{/*{postData.info}*/}
-{/*</Card.Text>}*/}
-
-{/*{(postData.vin_code || postData.vin_code !== '') && <Card.Text>*/}
-{/*    {postData.vin_code}*/}
-{/*</Card.Text>}*/}
-
-// <Card.Text>
-//     {postData.color}
-// </Card.Text>}
-// {(postData.distinct_feature || postData.distinct_feature !== '') && <Card.Text>
-//     {postData.distinct_feature}
-// </Card.Text>}

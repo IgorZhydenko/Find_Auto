@@ -79,6 +79,8 @@ const ENG_LANGUAGE_FILE = {
         "edit_post": "Edit post",
         "delete_post": "Delete post",
         "make_bookmark": "Make bookmark",
+        "delete_bookmark": "Delete bookmark",
+        "my_posts": "My posts",
     },
     "date_format": "{{-date, MM/DD/YYYY}}",
     "filter": "Filter",

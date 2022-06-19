@@ -79,6 +79,8 @@ const UKR_LANGUAGE_FILE = {
         "edit_post": "Редагувати публікацію",
         "delete_post": "Видалити публікацію",
         "make_bookmark": "Зробити закладинку",
+        "delete_bookmark": "Видалити закладинку",
+        "my_posts": "Мої публікації",
     },
     "date_format": "{{date, DD.MM.YYYY}}",
     "filter": "Фільтр",

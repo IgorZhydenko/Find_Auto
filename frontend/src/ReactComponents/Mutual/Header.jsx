@@ -1,4 +1,4 @@
-import {Dropdown, Nav} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import {NavLink} from "react-router-dom";
 import {useTranslation} from "react-i18next";

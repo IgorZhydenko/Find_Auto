@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {FormControl, Button, Container, Modal, Form, Figure, Table} from "react-bootstrap";
-import delBtn from "../../../images/del.png";
-import acceptBtn from "../../../images/check-png.png";
+import {Button, Container, Modal, Form, Figure} from "react-bootstrap";
 import axios from "axios";
-import {useHistory, useLocation, useParams} from "react-router-dom";
-//import {Button} from "@material-ui/core";
-import { useTranslation } from "react-i18next";
-import PostCreateForm from "./PostCreateForm";
+import {useHistory, useLocation} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 import PostEditForm from "./PostEditForm";
-import PhoneInput from "react-phone-number-input";
 
 const PostPage = ({ userData, updateAllPosts }) => {
     const { state: postData } = useLocation();
@@ -36,25 +31,23 @@ const PostPage = ({ userData, updateAllPosts }) => {
     const handleShowConfirmModal = () => setShowConfirmModal(true);
     const handleCloseConfirmModal = () => setShowConfirmModal(false);
     useEffect(() => {
-        console.log(process.env.REACT_APP_BOOKMARK, "tyutyu");
         axios({
             method: "get",
             headers: {
                 Authorization: "JWT " + localStorage.getItem("login_token"),
             },
-            // data: {
-            //     'user_id': userData.userId,
-            //     'post_id': postData.pk,
-            // },
             url:
                 process.env.REACT_APP_LINK +
-                process.env.REACT_APP_BOOKMARK + userData.userId + "/" + postData.pk + "/",
+                process.env.REACT_APP_BOOKMARKS + userData.userId + "/",
         })
             .then((res) => {
-                //TODO если есть в закладках - то возвращается тру ну и там понятно уже
-                //bookmarked = res.data.resultsl
-                //console.log(res.data, "qweqwrqrrq")
-                //setBookmarked(res.data.results)
+                setBookmarked(res.data.some((bookmark) => {
+                    return bookmark.post_id == postData.pk
+                }))
+
+                setBookmarkId(res.data.find((bookmark)=>{
+                    return bookmark.post_id == postData.pk
+                }).pk)
             })
             .catch((err) => {
                 console.log(err);
@@ -74,13 +67,10 @@ const PostPage = ({ userData, updateAllPosts }) => {
                 "/",
         })
             .then((res) => {
-                //console.log(res, "delete post");
                 if (res.status === 204)
                     setResultSuccesful(true);
 
                 handleShowResultModal();
-
-                //showResultModal()
             })
             .catch((err) => {
                 setResultSuccesful(false)
@@ -104,7 +94,6 @@ const PostPage = ({ userData, updateAllPosts }) => {
                 process.env.REACT_APP_BOOKMARKS
         })
             .then((res) => {
-                //console.log(res.data, "qweqwe");
                 setBookmarkId(res.data.pk)
                 setBookmarked(true)
             })
@@ -135,27 +124,6 @@ const PostPage = ({ userData, updateAllPosts }) => {
 
     return (
         <Container className={"post-page"}>
-
-            {/*<Table striped bordered hover>*/}
-            {/*    <tbody>*/}
-            {/*    <tr>*/}
-            {/*        <td>{t('post.name')}</td>*/}
-            {/*        <td>{postData.name}</td>*/}
-            {/*    </tr>*/}
-            {/*    <tr>*/}
-            {/*        <td>2</td>*/}
-            {/*        <td>Jacob</td>*/}
-            {/*        <td>Thornton</td>*/}
-            {/*        <td>@fat</td>*/}
-            {/*    </tr>*/}
-            {/*    <tr>*/}
-            {/*        <td>3</td>*/}
-            {/*        <td colSpan={2}>Larry the Bird</td>*/}
-            {/*        <td>@twitter</td>*/}
-            {/*    </tr>*/}
-            {/*    </tbody>*/}
-            {/*</Table>*/}
-
             <Container className={"post-page-image"}>
             <Figure>
                 <Figure.Image
@@ -182,11 +150,6 @@ const PostPage = ({ userData, updateAllPosts }) => {
             {(postData.phone_number || postData.phone_number !== '') && <p>
                 {t('post.phone_number')}: {postData.phone_number}
             </p>}
-
-            {/*<PhoneInput*/}
-            {/*    placeholder={t('enter_phone_number')}*/}
-            {/*    value={postData.phoneNumber}*/}
-            {/*/>*/}
 
             {(postData.registration_number || postData.registration_number !== '') && <p>
                 {t('post.registration_number')}: {postData.registration_number}

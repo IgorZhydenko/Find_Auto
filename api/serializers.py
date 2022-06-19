@@ -8,8 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields ='__all__'
-        #fields = ('username', 'password', 'email', 'first_name', 'last_name', 'about')
-        #read_only_fields = ('email',)
 
 
 class PostUploadsSerializer(serializers.ModelSerializer):
@@ -37,7 +35,6 @@ class PostSerializer(serializers.ModelSerializer):
 
 class BookmarkSerializer(serializers.ModelSerializer):
     post = serializers.SerializerMethodField()
-    # user_post = serializers.BooleanField(default=False)
 
     class Meta:
         model = Bookmark
@@ -47,6 +44,3 @@ class BookmarkSerializer(serializers.ModelSerializer):
         post_query = models.Post.objects.filter(pk=obj.post_id.pk).first()
         serializer = PostSerializer(post_query)
         return serializer.data
-    #
-    # def get_user_post(self, obj):
-    #

@@ -43,13 +43,5 @@ urlpatterns = [
     path('auth/token/verify/', TokenVerifyView.as_view()),
 ]
 
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#
-#     # path to djoser end points
-#     url(r'^auth/', include('djoser.urls')),
-#     url(r'^auth/', include('djoser.urls.jwt')),
-# ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

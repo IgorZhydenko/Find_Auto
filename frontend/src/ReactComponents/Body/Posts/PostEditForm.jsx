@@ -1,13 +1,13 @@
-import {React, useEffect, useState} from "react";
-import {Card, Form, Modal, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {React, useState} from "react";
+import {Form, Modal} from "react-bootstrap";
 import axios from "axios";
-import {Button, Radio} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import PhoneInput from "react-phone-number-input";
 import 'react-phone-number-input/style.css'
 
-const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) => {
+const PostEditForm = ({show, handleClose, userData, postData}) => {
     const [name, setName] = useState(postData.name || '');
     const [info, setInfo] = useState(postData.info);
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -38,9 +38,6 @@ const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) =
 
     const onFileChange = event =>
         setImages(event.target.files);
-
-    console.log(process.env.REACT_APP_LINK +
-        process.env.REACT_APP_POSTS + postData.pk,)
 
     const saveData = () =>{
         axios(
@@ -282,42 +279,4 @@ const PostEditForm = ({show, handleClose, userData, updateAllPosts, postData}) =
     )
 }
 
-/*
-* class Vehicle(models.Model):
-    vin_code = models.CharField(max_length=30, null=True, blank=True)
-    brand = models.CharField(max_length=30, null=True, blank=True)
-    model = models.CharField(max_length=30, null=True, blank=True)
-    year = models.DateField('Date created', default=timezone.now, null=True, blank=True)
-    color = models.CharField(max_length=50, null=True, blank=True)
-    distinct_feature = models.TextField(null=True, blank=True)
-    info = models.TextField(null=True, blank=True)
-    *
-class Post(models.Model):
-    name = models.CharField(max_length=500)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
-    info = models.TextField(max_length=500, null=True, blank=True)
-    vehicle_seen_place = models.TextField(max_length=500, null=True, blank=True)
-    vehicle_seen_date = models.DateField('Date seen', default=timezone.now, null=True, blank=True)
-    created = models.DateTimeField('Date created', default=timezone.now)
-    closed = models.DateTimeField('Date closed', default=timezone.now)
-    is_active = models.BooleanField(default=True)
-
-class PostUploads(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    file = models.FileField(upload_to="post/", max_length=250, null=True, default=None, blank=True)
-*
-* */
-/*
-PostCard.propTypes = {
-    postData: {
-        name : PropTypes.string,
-        info : PropTypes.string,
-        vehicle_seen_place : PropTypes.string,
-        vehicle_seen_date : PropTypes.string,
-        created : PropTypes.string,
-        closed : PropTypes.string,
-    }
-}
-*/
 export default PostEditForm;

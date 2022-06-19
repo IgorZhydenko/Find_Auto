@@ -1,14 +1,13 @@
-import {React, useEffect, useState} from "react";
-import {Card, Form, Modal, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {React, useState} from "react";
+import {Form, Modal} from "react-bootstrap";
 import axios from "axios";
-import {Button, Radio} from "@material-ui/core";
-import PropTypes from "prop-types";
+import {Button} from "@material-ui/core";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
-const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
+const PostCreateForm = ({show, handleClose, userData}) => {
     const [name, setName] = useState('');
     const [info, setInfo] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,28 +40,10 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
         setImages(event.target.files);
 
     const verifyData = () =>{
-        //name
-        //vehicleSeenDate
-        //year
         return true
     }
 
     const saveData = () =>{
-        // const formData = new FormData();
-        // formData.append('name', name)
-        // formData.append('user_id', userData['userId'])
-        // formData.append('info', info)
-        // formData.append('is_search', isSearch)
-        // formData.append('vehicle_seen_date', vehicleSeenDate)
-        // formData.append('vehicle_seen_place', vehicleSeenPlace)
-        // formData.append('vin_code', vinCode)
-        // formData.append('registration_number', registrationNumber)
-        // formData.append('brand', brand)
-        // formData.append('model', model)
-        // formData.append('year', year)
-        // formData.append('color', color)
-        // formData.append('distinct_feature', distinctFeature)
-        // formData.append('uploads', images)
         axios(
             {
                 method: 'post',
@@ -109,13 +90,7 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
                     }
                 )
                     .then(res => {
-                        //console.log(res.status, "status");
-                        //console.log(userData);
-                        //console.log("qwertyuiop[");
-                        //TODO updateAllPosts(res.data.posts)
-                        //savePostUploads(res.data.postId)
                         setResultSuccesful(true);
-
                         handleShowResultModal();
                     })
                     .catch(err => {
@@ -123,16 +98,6 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
                         console.log(err);
                     })
             })
-            // .then(res => {
-            //     //console.log(res.status, "status");
-            //     //console.log(userData);
-            //     //console.log("qwertyuiop[");
-            //     //TODO updateAllPosts(res.data.posts)
-            //     //savePostUploads(res.data.postId)
-            //     setResultSuccesful(true);
-            //
-            //     handleShowResultModal();
-            // })
             .catch(err => {
                 setResultSuccesful(false)
                 handleShowResultModal(false);
@@ -324,42 +289,4 @@ const PostCreateForm = ({show, handleClose, userData, updateAllPosts}) => {
     )
 }
 
-/*
-* class Vehicle(models.Model):
-    vin_code = models.CharField(max_length=30, null=True, blank=True)
-    brand = models.CharField(max_length=30, null=True, blank=True)
-    model = models.CharField(max_length=30, null=True, blank=True)
-    year = models.DateField('Date created', default=timezone.now, null=True, blank=True)
-    color = models.CharField(max_length=50, null=True, blank=True)
-    distinct_feature = models.TextField(null=True, blank=True)
-    info = models.TextField(null=True, blank=True)
-    *
-class Post(models.Model):
-    name = models.CharField(max_length=500)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
-    info = models.TextField(max_length=500, null=True, blank=True)
-    vehicle_seen_place = models.TextField(max_length=500, null=True, blank=True)
-    vehicle_seen_date = models.DateField('Date seen', default=timezone.now, null=True, blank=True)
-    created = models.DateTimeField('Date created', default=timezone.now)
-    closed = models.DateTimeField('Date closed', default=timezone.now)
-    is_active = models.BooleanField(default=True)
-
-class PostUploads(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    file = models.FileField(upload_to="post/", max_length=250, null=True, default=None, blank=True)
-*
-* */
-/*
-PostCard.propTypes = {
-    postData: {
-        name : PropTypes.string,
-        info : PropTypes.string,
-        vehicle_seen_place : PropTypes.string,
-        vehicle_seen_date : PropTypes.string,
-        created : PropTypes.string,
-        closed : PropTypes.string,
-    }
-}
-*/
 export default PostCreateForm;

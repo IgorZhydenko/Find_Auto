@@ -97,6 +97,7 @@ code {
 .post-page {
   display: flex;
   margin: 0;
+  max-width: 1400px;
 }
 
 .post-page-image {
@@ -150,4 +151,8 @@ code {
   height: 1.5em;
   border-radius: .3em;
   margin: 0;
+}
+
+.post-card-color-text {
+  display: flex;
 }
