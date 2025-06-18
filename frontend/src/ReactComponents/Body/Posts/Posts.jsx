@@ -15,6 +15,7 @@ const Posts = (props) => {
         return post.name.toLowerCase().includes(props.filterData.name.toLowerCase())
             && (props.filterData.isSearch === undefined || post.is_search === props.filterData.isSearch)
             && (props.filterData.vehicleSeenDate === "" || post.vehicle_seen_date === props.filterData.vehicleSeenDate)
+            && post.vehicle_seen_place.toLowerCase().includes(props.filterData.vehicleSeenPlace.toLowerCase())
             && post.vin_code.toLowerCase().includes(props.filterData.vinCode.toLowerCase())
             && post.brand.toLowerCase().includes(props.filterData.brand.toLowerCase())
             && post.model.toLowerCase().includes(props.filterData.model.toLowerCase())
